@@ -9,23 +9,21 @@ from selenium.webdriver.common.keys import Keys
 from urllib.request import urlretrieve
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-# 페이지 로딩을 기다리는데에 사용할 time 모듈 import
+# 페이지 로딩을 기다리는데 사용할 time 모듈 import
 import time
 import MySQLdb
-import pymysql
 
 import urllib
 import uuid
 import json
 import requests
 
+import SttAndTts
+
 HomeUrl = "https://front.homeplus.co.kr/"
 GooUrl = "https://www.google.co.kr/"
 api_url = "https://y3hw7c8u65.apigw.ntruss.com/custom/v1/23682/24dc560540b3d588ce29f91ed67fc738a362844154f27397656afd093c2d57b3/general" #수정하기 Naver Clovar
 secret_key = "V2VJTVNQeFpHZ1dObHVTVnduYW9WeG90T1hPd3hJV1Y=" #수정하기 Naver Clovar
-
-dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio" #audio directory location (SocketServer.py에서 참조 중)
-filename = dir_audio + "\\voice.mp3"
 
 user = "root"
 passwd = "root"
@@ -43,15 +41,10 @@ db = "homeplus"
 # DB에 상품 정보 저장
 # Tips!!: tab 들여쓰기 단축키, shift+tab 내어쓰기 단축키
 
-def start():
-    # query_txt = get_key()
-    # print(query_txt)
-    query_txt = "라면"
+def start(query_txt):
 
-    # 크롬드라이버 실행
-    driver = webdriver.Chrome()
-    # 크롬 드라이버에 url 주소 넣고 실행
-    driver.get(HomeUrl)
+    driver = webdriver.Chrome() # 크롬 드라이버 실행
+    driver.get(HomeUrl)         # 크롬 드라이버에 url 주소 넣고 실행
 
     conn = MySQLdb.connect(
         user=user,
@@ -59,43 +52,33 @@ def start():
         host=host,
         db=db
     )
-    # 페이지가 완전히 로딩되도록 3초동안 기다림
-    time.sleep(3)
-
+    time.sleep(3)               # 페이지가 완전히 로딩되도록 3초동안 기다림
     driver.find_element(By.NAME, "keyword").send_keys(query_txt, Keys.ENTER)
-    time.sleep(5)  # sleep 안걸어주면 한줄당 3개의 상품들만 출력됨
+    time.sleep(5)               # sleep 안 걸어주면 한줄당 3개의 상품만 출력됨
 
     ############################################################### 크롤링 뷰 invisible하게
     ############################################################### 검색했을 때 아무것도 안 나오는 경우 처리?
 
-    # 커서 생성하기
-    cursor = conn.cursor()
+    cursor = conn.cursor()      # 커서 생성
 
-    # 실행할 때마다 다른 값이 나오지 않도록 테이블을 제거해두기
-    cursor.execute("DROP TABLE IF EXISTS page_items")
-
+    cursor.execute("DROP TABLE IF EXISTS page_items")   # 실행할 때마다 다른 값이 나오지 않도록 테이블을 제거해두기
     # cursor.execute('CREATE TABLE IF NOT EXISTS page_items(ranks INT, name TEXT, price TEXT, link CHAR(255))')
     cursor.execute('CREATE TABLE page_items(ranks INT, name TEXT, price TEXT, link CHAR(255))')
 
     prods = driver.find_elements(By.CLASS_NAME, 'unitItemBox')
 
-    # name_list=[]
     ranks = 1
     for prod in prods:
         name = prod.find_element(By.CLASS_NAME, "css-12cdo53-defaultStyle-Typography-ellips").text
         price = prod.find_element(By.CLASS_NAME, "priceValue").text
         link = prod.find_element(By.CLASS_NAME, "productTitle").get_attribute('href')
-        #         print(name)
-        #         print(price)
-        #         print(link)
+
         cursor.execute("INSERT INTO page_items VALUES (%d, '%s', '%s', '%s')" % (ranks, name, price, link))
         ranks += 1
-
         cursor.execute("SELECT link FROM page_items WHERE ranks < 4")
+
     db_link = cursor.fetchall()
     print("현재 테이블의 데이터 수 : {}".format(len(db_link)))
-    # print(db_link[0])
-    # print(type(db_link[0]))
 
     ranks = 0
     cursor.execute('ALTER TABLE page_items ADD (main_picture CHAR(255), src_link CHAR(255), Allergy_extraction TEXT)')
@@ -134,16 +117,16 @@ def start():
             "UPDATE page_items SET main_picture='%s', src_link='%s' WHERE ranks='%d'" % (main_picture, src_link, ranks))
         # print(src_link)
 
-        re = naver_clova(src_link)  # 클로바 OCR 실행
-        stts_allergy = find_allergy(re)  # 알러지 정보 추출
+        re = naver_clova(src_link)      # 클로바 OCR 실행
+        stts_allergy = find_allergy(re) # 알러지 정보 추출
         string_allergy = ' '.join(stts_allergy)
         cursor.execute("UPDATE page_items SET Allergy_extraction='%s' WHERE ranks='%d'" % (string_allergy, ranks))
         # print(string_allergy)
 
-    # 커밋
-    conn.commit()
-    # 연결 종료
-    conn.close
+    conn.commit()           # 커밋 후
+    conn.close              # 연결 종료
+
+    return 0
 
 
 #################################################################################################################################
@@ -307,4 +290,5 @@ def naver_clova(src_link):
     
     return re
 
-#start()
+
+# allergy 정보 to DB ?????

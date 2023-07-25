@@ -3,6 +3,7 @@
 
 import socket
 import toDB
+import SttAndTts
 
 
 soc = socket.socket()
@@ -19,23 +20,17 @@ while True:
     msg = conn.recv(length_of_message).decode("UTF-8")
     print('받은 메세지: ' + msg)
 
-    if (length_of_message > 0):
-        print("success to connect Socket\ntoDB.start()")
-        toDB.start()
+    if "0" in msg:
+        query_txt = SttAndTts.get_key()
+        if query_txt == -1:
+            print("fail to get key")
+        else:
+            print(query_txt)
+            toDB.start(query_txt)
     else:
-        print("fail to connect Socket\n")
-        break
+        toDB.start(msg)
+        print("use key from input\n")
 
-    message_to_send = toDB.filename.encode("UTF-8")
+    message_to_send = SttAndTts.filename.encode("UTF-8")
     conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
     conn.send(message_to_send)
-
-    '''
-    # Note the corrected indentation below
-    if "Hello"in msg:
-        message_to_send = "Bye".encode("UTF-8")
-        conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
-        conn.send(message_to_send)
-    else:
-        print("no message")
-    '''

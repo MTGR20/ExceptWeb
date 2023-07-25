@@ -33,6 +33,8 @@ def get_key():
         print("HTTP Request Error 발생")
     except sr.WaitTimeoutError:
         print("WaitTimeout Error 발생 ㅠㅠ")
-    return -1;
 
-get_key()
+    return -1
+
+
+############################################# 상품 정보 tts 필요함
