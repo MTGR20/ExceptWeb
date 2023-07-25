@@ -14,11 +14,6 @@ import time
 import MySQLdb
 import pymysql
 
-'''import speech_recognition as sr
-from gtts import gTTS
-import os
-import playsound'''
-
 import urllib
 import uuid
 import json
@@ -45,33 +40,7 @@ db = "homeplus"
 '''
 
 #################################################################################################################################
-
-'''def speak(text):
-    tts = gTTS(text=text, lang='ko')
-    tts.save(filename) # 파일을 만들고,
-    playsound.playsound(filename) # 해당 음성파일을 실행(즉, 음성을 말함)
-    os.remove(filename) # <---- 이부분이 없으면 퍼미션 에러 발생(아마도 파일을 연 상태에서 추가적인 파일생성 부분에서 에러가 발생하는 것으로 보임)
-
-def get_key():
-    # 안내 방송(음성)
-    speak("안녕하세요. 검색할 상품의 이름을 말씀해주세요.")
-    
-    # 사용자 음성 듣기
-    r = sr.Recognizer()
-    mic = sr.Microphone(device_index = 1)
-    
-    with mic as source:
-        audio = r.listen(source, timeout = 3)
-
-    query_txt = r.recognize_google(audio, language="ko-KR")
-    return (query_txt)    
-    '''
-
-
-#################################################################################################################################
 # DB에 상품 정보 저장
-# DB start, close : 실행 코드 맨 첫 부분, 끝 부분(사용자가 창 닫을 때)에 추가하기
-# save_products_to_db: get_product(key) 함수 내부에서 사용
 # Tips!!: tab 들여쓰기 단축키, shift+tab 내어쓰기 단축키
 
 def start():
