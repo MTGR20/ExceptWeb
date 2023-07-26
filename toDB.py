@@ -43,6 +43,8 @@ db = "homeplus"
 
 def start(query_txt):
 
+    global string_allergy
+
     driver = webdriver.Chrome() # 크롬 드라이버 실행
     driver.get(HomeUrl)         # 크롬 드라이버에 url 주소 넣고 실행
 
@@ -125,6 +127,10 @@ def start(query_txt):
 
     conn.commit()           # 커밋 후
     conn.close              # 연결 종료
+
+    #stts_msg = ""
+    #SttAndTts.save(stts_msg)
+    SttAndTts.save(string_allergy)
 
     return 0
 
@@ -289,6 +295,3 @@ def naver_clova(src_link):
     re.append(all)
     
     return re
-
-
-# allergy 정보 to DB ?????

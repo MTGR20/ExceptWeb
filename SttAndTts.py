@@ -11,6 +11,11 @@ def speak(text):
     tts.save(filename)      # 파일을 만들고,
     playsound(filename)     # 해당 음성 파일을 실행 (즉, 음성을 말함)
     os.remove(filename)     # 이 부분 없으면 퍼미션 에러 발생 (파일을 연 상태에서의 추가 파일 생성 부분에서 에러가 발생하는 것으로 보임)
+def save(text):
+    tts = gTTS(text=text, lang='ko')
+    tts.save(filename)
+    ###### 파일 추후에 삭제?
+
 
 def get_key():
 
@@ -35,6 +40,3 @@ def get_key():
         print("WaitTimeout Error 발생 ㅠㅠ")
 
     return -1
-
-
-############################################# 상품 정보 tts 필요함
