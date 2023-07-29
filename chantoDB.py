@@ -158,9 +158,7 @@ def make_tts():
         product_name = re[1]
         product_price = re[2]
         product_allergy = re[-1]
-        #print(f"{product_rank}번 제품의 이름은 {product_name}입니다. 가격은 {product_price}입니다. 알러지정보는 {product_allergy}입니다.")
         text = f"{product_rank}번 제품의 이름은 {product_name} 입니다. 가격은 {product_price}원 입니다. 알러지정보는 {product_allergy}입니다."
-        #print(text)
         stts.append(text)
         i+=1
         SttAndTts.make_audio(product_rank,text)

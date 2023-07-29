@@ -58,8 +58,8 @@ def start(query_txt):
     driver.find_element(By.NAME, "keyword").send_keys(query_txt, Keys.ENTER)
     time.sleep(5)               # sleep 안 걸어주면 한줄당 3개의 상품만 출력됨
 
-    ############################################################### 크롤링 뷰 invisible하게
-    ############################################################### 검색했을 때 아무것도 안 나오는 경우 처리?
+    ############################################################### 크롤링 뷰 invisible하게 -> (유림)
+    ############################################################### 검색했을 때 아무것도 안 나오는 경우 처리? -> X (보류)
 
     cursor = conn.cursor()      # 커서 생성
 
@@ -126,14 +126,27 @@ def start(query_txt):
         # print(string_allergy)
 
     conn.commit()           # 커밋 후
-    conn.close              # 연결 종료
+    #conn.close              # 연결 종료
 
-    #stts_msg = ""
-    #SttAndTts.save(stts_msg)
-    SttAndTts.save(string_allergy)
+    #make_tts
+    cursor.execute("SELECT * FROM page_items")
+    num = 10
+    result = cursor.fetchmany(num)
+
+    stts = []
+    for re in result:
+        product_rank = re[0]
+        product_name = re[1]
+        product_price = re[2]
+        product_allergy = re[-1]
+        text = f"{product_rank}번 제품의 이름은 {product_name} 입니다. 가격은 {product_price}원 입니다. 알러지정보는 {product_allergy}입니다."
+        stts.append(text)
+        #SttAndTts.make_audio(product_rank, text)
+
+    #conn.commit() # 커밋 안 해도 됨
+    conn.close
 
     return 0
-
 
 #################################################################################################################################
     
