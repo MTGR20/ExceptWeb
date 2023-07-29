@@ -20,7 +20,7 @@ def speak(text):
 
 def get_key():
 
-    speak(inform_msg) # 안내 방송(음성)
+ #   speak(inform_msg) # 안내 방송(음성)
 
     # 사용자 음성 듣기
     r = sr.Recognizer()

@@ -46,6 +46,12 @@ def start(query_txt):
     global string_allergy
 
     driver = webdriver.Chrome() # 크롬 드라이버 실행
+
+    ### 크롬창 띄우지 않고 크롬드라이버 실행 ###
+    #options = webdriver.ChromeOptions()
+    #options.add_argument("headless")
+    #driver = webdriver.Chrome(options=options)
+
     driver.get(HomeUrl)         # 크롬 드라이버에 url 주소 넣고 실행
 
     conn = MySQLdb.connect(
@@ -81,6 +87,10 @@ def start(query_txt):
 
     db_link = cursor.fetchall()
     print("현재 테이블의 데이터 수 : {}".format(len(db_link)))
+
+    # 검색한 상품이 없는 경우
+    if len(db_link) == 0:
+        print("검색된 상품이 없음 / 추후 수정")
 
     ranks = 0
     cursor.execute('ALTER TABLE page_items ADD (main_picture CHAR(255), src_link CHAR(255), Allergy_extraction TEXT)')
@@ -122,6 +132,7 @@ def start(query_txt):
         re = naver_clova(src_link)      # 클로바 OCR 실행
         stts_allergy = find_allergy(re) # 알러지 정보 추출
         string_allergy = ' '.join(stts_allergy)
+        string_allergy = string_allergy[:-2]  # 맨 마지막 , 없애기
         cursor.execute("UPDATE page_items SET Allergy_extraction='%s' WHERE ranks='%d'" % (string_allergy, ranks))
         # print(string_allergy)
 
@@ -141,10 +152,11 @@ def start(query_txt):
         product_allergy = re[-1]
         text = f"{product_rank}번 제품의 이름은 {product_name} 입니다. 가격은 {product_price}원 입니다. 알러지정보는 {product_allergy}입니다."
         stts.append(text)
-        #SttAndTts.make_audio(product_rank, text)
+        SttAndTts.make_audio(product_rank, text)
 
     #conn.commit() # 커밋 안 해도 됨
     conn.close
+    driver.quit() # 크롬 드라이버 종료
 
     return 0
 
@@ -253,7 +265,7 @@ def stt_string(pre_re,allergy):
     result=set(set_allergy)
     for a in result:
         stt+=a
-        stt+=" "
+        stt+=", "
         #print(a,end=' ')
     #print("입니다.")
     return stt
