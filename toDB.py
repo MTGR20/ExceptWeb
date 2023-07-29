@@ -25,10 +25,10 @@ GooUrl = "https://www.google.co.kr/"
 api_url = "https://y3hw7c8u65.apigw.ntruss.com/custom/v1/23682/24dc560540b3d588ce29f91ed67fc738a362844154f27397656afd093c2d57b3/general" #수정하기 Naver Clovar
 secret_key = "V2VJTVNQeFpHZ1dObHVTVnduYW9WeG90T1hPd3hJV1Y=" #수정하기 Naver Clovar
 
-user = "root"
-passwd = "root"
-host = "localhost"
-db = "new_schema"
+# user = "root"
+# passwd = "root"
+# host = "localhost"
+# db = "new_schema"
 
 # BY YEWON
 user = "sw23"

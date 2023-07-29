@@ -36,9 +36,10 @@ while True:
             send_msg("fail to get key")
         else:
             print(query_txt)
-            toDB.start(query_txt)
+            send_msg(query_txt)
+            # toDB.start(query_txt)
 
-            send_msg(SttAndTts.dir_audio)
+            # send_msg(SttAndTts.dir_audio)
     else:
         toDB.start(msg)
         print("use key from input\n")
