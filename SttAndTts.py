@@ -9,7 +9,7 @@ dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio" #audio dir
 # dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp"  # BY YEWON
 filename = dir_audio + "\\voice.mp3"
 inform_msg = "안녕하세요. 검색할 상품의 이름을 말씀해주세요."
-effect_msg = "띵동"
+effect_msg = "C:\\Users\\joyew\\Project\\sw23\\ExceptWeb\\mp3\\MP_Pling.mp3"
 loading_msg = "상품을 검색 중입니다. 잠시만 기다려주세요."
 error_msg = "다시 말씀해주세요."
 
@@ -29,7 +29,7 @@ def get_key():
  #   speak(inform_msg) # 안내 방송(음성)
 
     while True:
-        speak(effect_msg)
+        playsound(effect_msg) # 효과음
         
         try:
             # 사용자 음성 듣기
@@ -50,8 +50,10 @@ def get_key():
             print("HTTP Request Error 발생")
         except sr.WaitTimeoutError:
             print("WaitTimeout Error 발생 ㅠㅠ")
-            
-        speak(error_msg)
+        
+        # 입력된 키워드가 있나 확인    
+        
+        speak(error_msg)    # 에러 메시지 방송(음성)
         sleep(1)
 
     return -1
