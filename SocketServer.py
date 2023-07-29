@@ -5,11 +5,13 @@ import socket
 import toDB
 import SttAndTts
 
-
-soc = socket.socket()
+### 수정 ###
 host = "172.30.1.84" #IPv4 값 수정하고 실행하세요
 host = "127.0.0.1"  # BY YEWON
 port = 8000
+############
+
+soc = socket.socket()
 soc.bind((host, port))
 soc.listen(5)
 
