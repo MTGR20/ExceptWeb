@@ -5,8 +5,6 @@ import os
 from playsound import playsound
 # 에러 시, pip install playsound==1.2.2 실행해볼 것 (윈도우 기준)
 
-import lock
-
 dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio" #audio directory location (SocketServer.py에서 참조 중)
 dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp"  # BY YEWON
 filename = dir_audio + "\\voice.mp3"

@@ -4,7 +4,6 @@
 import socket
 import toDB
 import SttAndTts
-import lock
 
 
 soc = socket.socket()
@@ -15,10 +14,12 @@ soc.bind((host, port))
 soc.listen(5)
 
 def send_msg(message_to_send) :
-    message_to_send = message_to_send.encode("UTF-8")
-    conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
-    conn.send(message_to_send)
-    # 연결 끊기면 에러나는데 그거 처리만 잘 하면!!!?!!
+    try:
+        message_to_send = message_to_send.encode("UTF-8")
+        conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
+        conn.send(message_to_send)
+    except ConnectionAbortedError:
+        print("disconnect")
 
 while True:
     print("Ready to connect")
