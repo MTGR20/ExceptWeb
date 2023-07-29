@@ -4,14 +4,21 @@
 import socket
 import toDB
 import SttAndTts
+import lock
 
 
 soc = socket.socket()
 host = "172.30.1.84" #IPv4 값 수정하고 실행하세요
-# host = "127.0.0.1"  # BY YEWON
+host = "127.0.0.1"  # BY YEWON
 port = 8000
 soc.bind((host, port))
 soc.listen(5)
+
+def send_msg(message_to_send) :
+    message_to_send = message_to_send.encode("UTF-8")
+    conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
+    conn.send(message_to_send)
+    # 연결 끊기면 에러나는데 그거 처리만 잘 하면!!!?!!
 
 while True:
     print("Ready to connect")
@@ -25,13 +32,18 @@ while True:
         query_txt = SttAndTts.get_key()
         if query_txt == -1:
             print("fail to get key")
+            send_msg("fail to get key")
         else:
             print(query_txt)
             toDB.start(query_txt)
+
+            send_msg(SttAndTts.dir_audio)
     else:
         toDB.start(msg)
         print("use key from input\n")
 
-    message_to_send = SttAndTts.dir_audio.encode("UTF-8")
-    conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
-    conn.send(message_to_send)
+        send_msg(SttAndTts.dir_audio)
+
+    # message_to_send = SttAndTts.dir_audio.encode("UTF-8")
+    # conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
+    # conn.send(message_to_send)

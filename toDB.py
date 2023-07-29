@@ -31,10 +31,10 @@ host = "localhost"
 db = "new_schema"
 
 # BY YEWON
-# user = "sw23"
-# passwd = "sw23"
-# host = "localhost"
-# db = "homeplus"
+user = "sw23"
+passwd = "sw23"
+host = "localhost"
+db = "homeplus"
 
 '''
 db_user = "crawl_usr"
@@ -96,7 +96,8 @@ def start(query_txt):
 
     # 검색한 상품이 없는 경우
     if len(db_link) == 0:
-        print("검색된 상품이 없음 / 추후 수정")
+        print("검색된 상품이 없음 / 음성 파일 경로 리턴")
+        dir_audio = ""
 
     ranks = 0
     cursor.execute('ALTER TABLE page_items ADD (main_picture CHAR(255), src_link CHAR(255), Allergy_extraction TEXT)')
