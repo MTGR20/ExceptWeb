@@ -4,8 +4,10 @@ import os
 from playsound import playsound
 
 dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio" #audio directory location (SocketServer.py에서 참조 중)
+# dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp"  # BY YEWON
 filename = dir_audio + "\\voice.mp3"
 inform_msg = "안녕하세요. 검색할 상품의 이름을 말씀해주세요."
+loading_msg = "상품을 검색 중입니다. 잠시만 기다려주세요."
 
 def make_audio(product_rank,text):
     #오디오파일 만들기
@@ -39,5 +41,7 @@ def get_key():
         print("HTTP Request Error 발생")
     except sr.WaitTimeoutError:
         print("WaitTimeout Error 발생 ㅠㅠ")
+        
+    speak(loading_msg) # 로딩 메시지 방송(음성)
 
     return -1
