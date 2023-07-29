@@ -8,7 +8,7 @@ import SttAndTts
 
 soc = socket.socket()
 host = "172.30.1.84" #IPv4 값 수정하고 실행하세요
-host = "127.0.0.1"  # BY YEWON
+# host = "127.0.0.1"  # BY YEWON
 port = 8000
 soc.bind((host, port))
 soc.listen(5)
@@ -32,6 +32,6 @@ while True:
         toDB.start(msg)
         print("use key from input\n")
 
-    message_to_send = SttAndTts.filename.encode("UTF-8")            ### 추후에 filename 대신 자막 txt 전달하는 것으로 변경
+    message_to_send = SttAndTts.dir_audio.encode("UTF-8")
     conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
     conn.send(message_to_send)
