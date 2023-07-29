@@ -6,6 +6,10 @@ from playsound import playsound
 dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio" #audio directory location (SocketServer.py에서 참조 중)
 filename = dir_audio + "\\voice.mp3"
 
+def make_audio(product_rank,text):
+    #오디오파일 만들기
+    tts = gTTS(text=text, lang='ko')
+    tts.save(f'{dir_audio}/{product_rank}.mp3')
 def speak(text):
     tts = gTTS(text=text, lang='ko')
     tts.save(filename)      # 파일을 만들고,
