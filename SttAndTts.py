@@ -9,7 +9,7 @@ dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio" #audio dir
 # dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp"  # BY YEWON
 filename = dir_audio + "\\voice.mp3"
 inform_msg = "안녕하세요. 검색할 상품의 이름을 말씀해주세요."
-effect_msg = "C:\\Users\\joyew\\Project\\sw23\\ExceptWeb\\mp3\\MP_Pling.mp3"
+effect_msg = ".\\mp3\\MP_Pling.mp3"
 loading_msg = "상품을 검색 중입니다. 잠시만 기다려주세요."
 error_msg = "다시 말씀해주세요."
 
@@ -57,3 +57,5 @@ def get_key():
         sleep(1)
 
     return -1
+
+get_key()
