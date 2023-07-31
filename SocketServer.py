@@ -7,7 +7,7 @@ import SttAndTts
 
 ### 수정 ###
 host = "172.30.1.84" #IPv4 값 수정하고 실행하세요
-# host = "127.0.0.1"  # BY YEWON
+host = "127.0.0.1"  # BY YEWON
 port = 8000
 ############
 
@@ -26,12 +26,15 @@ def send_msg(message_to_send) :
         print("disconnect")
 
 while True:
-    print("Ready to connect")
-    conn, addr = soc.accept()
-    print("Got connection from",addr)
-    length_of_message = int.from_bytes(conn.recv(2), byteorder='big')
-    msg = conn.recv(length_of_message).decode("UTF-8")
-    print('받은 메세지: ' + msg)
+    try:
+        print("Ready to connect")
+        conn, addr = soc.accept()
+        print("Got connection from",addr)
+        length_of_message = int.from_bytes(conn.recv(2), byteorder='big')
+        msg = conn.recv(length_of_message).decode("UTF-8")
+        print('받은 메세지: ' + msg)
+    except ConnectionResetError:
+        print("disconnect")
 
     if "0" in msg:
         query_txt = SttAndTts.get_key()

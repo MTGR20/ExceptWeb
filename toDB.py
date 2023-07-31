@@ -32,10 +32,10 @@ host = "localhost"
 db = "new_schema"
 
 # BY YEWON
-# user = "sw23"
-# passwd = "sw23"
-# host = "localhost"
-# db = "homeplus"
+user = "sw23"
+passwd = "sw23"
+host = "localhost"
+db = "homeplus"
 
 '''
 db_user = "crawl_usr"

@@ -9,7 +9,7 @@ from playsound import playsound
 ### 수정 ###
 # 주의! ProductsListController.java의 dir_audio와 같은 경로여야 함.
 dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio" #audio directory location (SocketServer.py에서 참조 중)
-# dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp"  # BY YEWON
+dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp"  # BY YEWON
 ############
 
 
