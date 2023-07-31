@@ -7,6 +7,7 @@ from playsound import playsound
 
 
 ### 수정 ###
+# 주의! ProductsListController.java의 dir_audio와 같은 경로여야 함.
 dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio" #audio directory location (SocketServer.py에서 참조 중)
 # dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp"  # BY YEWON
 ############
@@ -46,7 +47,7 @@ def get_key():
         query_txt = r.recognize_google(audio, language="ko-KR")
         print(query_txt)
         
-        speak(loading_msg) # 로딩 메시지 방송(음성)
+        # speak(loading_msg) # 로딩 메시지 방송(음성)
         return (query_txt)
     
     except sr.UnknownValueError:

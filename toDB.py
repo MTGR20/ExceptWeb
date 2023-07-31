@@ -25,13 +25,13 @@ GooUrl = "https://www.google.co.kr/"
 api_url = "https://y3hw7c8u65.apigw.ntruss.com/custom/v1/23682/24dc560540b3d588ce29f91ed67fc738a362844154f27397656afd093c2d57b3/general" #수정하기 Naver Clovar
 secret_key = "V2VJTVNQeFpHZ1dObHVTVnduYW9WeG90T1hPd3hJV1Y=" #수정하기 Naver Clovar
 
-### 수정 ###
+##### 수정 #####
 user = "root"
 passwd = "root"
 host = "localhost"
 db = "new_schema"
 
-# # BY YEWON
+# BY YEWON
 # user = "sw23"
 # passwd = "sw23"
 # host = "localhost"
@@ -43,7 +43,7 @@ passwd = "test1"
 host = "localhost"
 db = "homeplus"
 '''
-#########
+###############
 
 #################################################################################################################################
 # DB에 상품 정보 저장
@@ -99,7 +99,7 @@ def start(query_txt):
     # 검색한 상품이 없는 경우
     if len(db_link) == 0:
         print("검색된 상품이 없음 / 음성 파일 경로 리턴")
-        dir_audio = ""
+        dir_audio = "no items"
 
     ranks = 0
     cursor.execute('ALTER TABLE page_items ADD (main_picture CHAR(255), src_link CHAR(255), Allergy_extraction TEXT)')

@@ -7,7 +7,7 @@ import SttAndTts
 
 ### 수정 ###
 host = "172.30.1.84" #IPv4 값 수정하고 실행하세요
-host = "127.0.0.1"  # BY YEWON
+# host = "127.0.0.1"  # BY YEWON
 port = 8000
 ############
 
@@ -21,6 +21,8 @@ def send_msg(message_to_send) :
         conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
         conn.send(message_to_send)
     except ConnectionAbortedError:
+        print("disconnect")
+    except ConnectionResetError:
         print("disconnect")
 
 while True:
