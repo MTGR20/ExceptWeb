@@ -25,17 +25,16 @@ GooUrl = "https://www.google.co.kr/"
 api_url = "https://y3hw7c8u65.apigw.ntruss.com/custom/v1/23682/24dc560540b3d588ce29f91ed67fc738a362844154f27397656afd093c2d57b3/general" #수정하기 Naver Clovar
 secret_key = "V2VJTVNQeFpHZ1dObHVTVnduYW9WeG90T1hPd3hJV1Y=" #수정하기 Naver Clovar
 
-##### 수정 #####
 user = "root"
 passwd = "root"
 host = "localhost"
 db = "new_schema"
 
 # BY YEWON
-user = "sw23"
-passwd = "sw23"
-host = "localhost"
-db = "homeplus"
+# user = "sw23"
+# passwd = "sw23"
+# host = "localhost"
+# db = "homeplus"
 
 '''
 db_user = "crawl_usr"
@@ -43,7 +42,6 @@ passwd = "test1"
 host = "localhost"
 db = "homeplus"
 '''
-###############
 
 #################################################################################################################################
 # DB에 상품 정보 저장
@@ -91,15 +89,14 @@ def start(query_txt):
 
         cursor.execute("INSERT INTO page_items VALUES (%d, '%s', '%s', '%s')" % (ranks, name, price, link))
         ranks += 1
-        cursor.execute("SELECT link FROM page_items WHERE ranks < 4")
+        cursor.execute("SELECT link FROM page_items WHERE ranks < 10")
 
     db_link = cursor.fetchall()
     print("현재 테이블의 데이터 수 : {}".format(len(db_link)))
 
     # 검색한 상품이 없는 경우
     if len(db_link) == 0:
-        print("검색된 상품이 없음 / 음성 파일 경로 리턴")
-        dir_audio = "no items"
+        print("검색된 상품이 없음 / 추후 수정")
 
     ranks = 0
     cursor.execute('ALTER TABLE page_items ADD (main_picture CHAR(255), src_link CHAR(255), Allergy_extraction TEXT)')
@@ -204,7 +201,7 @@ def string_pre(all):
     return new_all
 
 def find_fac(all):
-    fac_keyword=['사용','제품','같은','시설','제조']
+    fac_keyword=['제품은','사용한','제품과', '같은','제조하고']
     fac_index=[]
     for a in range(len(all)):
         for f in fac_keyword:
